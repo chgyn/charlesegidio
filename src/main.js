@@ -7,6 +7,28 @@
 // 1. PROJECTS DATA STORE (ACCURATE TO RESUME & PDF PORTFOLIO)
 // ==========================================================================
 const PROJECTS_DATA = {
+  'ekko-ai': {
+    id: 'ekko-ai',
+    title: 'EkkoAI – Atendente de IA para WhatsApp & E-commerce',
+    subtitle: 'Workflows de Agentes Autônomos com LangGraph & Integração a WooCommerce e Shopify',
+    category: 'ai',
+    categoryLabel: 'Inteligência Artificial & Workflows Multi-Agente',
+    role: 'Tech Lead / Arquiteto de Software & Engenharia de IA',
+    period: '2026 – Presente',
+    url: 'https://ekkoai.com.br/',
+    stack: ['Python', 'LangGraph (Multi-Agent)', 'OpenAI ChatGPT API', 'FastAPI', 'WhatsApp Cloud API', 'Redis Checkpointing', 'WooCommerce API', 'Shopify API', 'Docker'],
+    summary: 'Atendente inteligente de IA orquestrado por workflows de agentes com LangGraph que atua no WhatsApp 24h: gerencia estados conversacionais cíclicos, roteia intenções, consulta estoque dinâmico, monta o carrinho em tempo real e registra o pedido diretamente na loja virtual (WooCommerce ou Shopify).',
+    challenge: 'Modelar e orquestrar fluxos conversacionais complexos e não-lineares no WhatsApp, coordenando múltiplos nós de agentes especializados (classificação de intenção, busca semântica em catálogo, validação de regras de negócio, carrinho e checkout) com controle estrito de estado, memória contextual e resiliência a falhas.',
+    solutionHighlights: [
+      'Workflow multi-agente implementado com LangGraph (StateGraph), dividindo a jornada de vendas em agentes especializados: Roteador de Intenções, Especialista de Catálogo/Produtos, Agente de Carrinho & Frete e Agente de Fechamento de Pedidos.',
+      'Controle de estado transacional e persistência com checkpoints no Redis, permitindo que a conversa retome exatamente do ponto onde o usuário parou sem perda de contexto no WhatsApp.',
+      'Integração oficial via WhatsApp Cloud API e FastAPI para processamento assíncrono de webhooks em alta escala 24/7 sem bloqueios ou filas de espera.',
+      'Sincronização bidirecional em tempo real com WooCommerce e Shopify: checagem de estoque, cálculo de frete, criação de carrinho e geração de pedidos com checkout direto.',
+      'Ciclos de auto-correção e fallbacks determinísticos orquestrados pelo grafo de estados do LangGraph para lidar com mensagens ambíguas e exceções de catálogo.'
+    ],
+    architectureDetails: 'WhatsApp Webhook ➔ FastAPI ➔ LangGraph StateGraph (Intent Router ➔ Catalog Tool Node ➔ Cart & Shipping Agent ➔ Order Creation Node) ➔ Redis Checkpoint Store ➔ E-commerce APIs (WooCommerce / Shopify) ➔ Real-time Conversion Analytics.'
+  },
+
   'hub-fintech': {
     id: 'hub-fintech',
     title: 'Hub Fintech & Internet Banking',
@@ -597,6 +619,10 @@ function initProjectModal() {
   const modalClientsBox = document.getElementById('modal-clients-box');
   const modalClients = document.getElementById('modal-clients');
   const modalArchDetails = document.getElementById('modal-arch-details');
+  const modalLinkBox = document.getElementById('modal-link-box');
+  const modalSiteLink = document.getElementById('modal-site-link');
+  const modalActionBox = document.getElementById('modal-action-box');
+  const modalActionLink = document.getElementById('modal-action-link');
 
   function openModal(projectId) {
     const data = PROJECTS_DATA[projectId];
@@ -609,6 +635,23 @@ function initProjectModal() {
     if (modalSummary) modalSummary.textContent = data.summary;
     if (modalChallenge) modalChallenge.textContent = data.challenge;
     if (modalArchDetails) modalArchDetails.textContent = data.architectureDetails;
+
+    // Handle project external link
+    if (data.url) {
+      if (modalLinkBox && modalSiteLink) {
+        modalLinkBox.style.display = 'block';
+        modalSiteLink.href = data.url;
+        modalSiteLink.textContent = data.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      }
+      if (modalActionBox && modalActionLink) {
+        modalActionBox.style.display = 'block';
+        modalActionLink.href = data.url;
+        modalActionLink.querySelector('span').textContent = `Acessar Website Oficial (${data.url.replace(/^https?:\/\//, '').replace(/\/$/, '')})`;
+      }
+    } else {
+      if (modalLinkBox) modalLinkBox.style.display = 'none';
+      if (modalActionBox) modalActionBox.style.display = 'none';
+    }
 
     if (modalHighlights) {
       modalHighlights.innerHTML = data.solutionHighlights
