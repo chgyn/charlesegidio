@@ -32,23 +32,42 @@ const PROJECTS_DATA = {
   'hub-fintech': {
     id: 'hub-fintech',
     title: 'Hub Fintech & Internet Banking',
-    subtitle: 'Grupo Itapemirim & Ecossistema para +10 Bancos Digitais',
+    subtitle: 'Inttegra Card, Inttegra Social, Grupo Itapemirim & +10 Instituições Digitais',
     category: 'fintech',
     categoryLabel: 'Fintech & Banking',
     role: 'Tech Lead / Arquiteto Back-end',
-    period: '2019 – Presente',
-    stack: ['PHP / Laravel', 'Golang', 'PostgreSQL', 'Redis', 'AWS (EC2/RDS)', 'Banking APIs', 'Docker', 'Webhooks'],
-    summary: 'Arquitetura e desenvolvimento do ecossistema transacional completo de internet banking e aplicativos digitais para mais de 10 instituições financeiras e bancos digitais.',
-    clients: ['Grupo Itapemirim', 'Aprobank', 'STARTech', 'BANKZZ', 'Belobank', '3NK Financial', 'Jeitto', 'inttegrar.HOUSE', 'Pomelo', 'SimerBank', 'XBank', 'Zoop'],
-    challenge: 'Construir uma infraestrutura bancária de alta disponibilidade e estrita conformidade regulatória, capaz de processar transações financeiras em tempo real, liquidações concorrentes e conciliações seguras para milhares de correntistas simultâneos.',
-    solutionHighlights: [
-      'Implementação de microsserviços concorrentes em Golang para processamento veloz de webhooks de liquidação PIX e conciliações.',
-      'Core bancário robusto em PHP/Laravel com Clean Architecture e Domain-Driven Design (DDD).',
-      'Integração ponta a ponta de PIX, TED, DOC, emissão e liquidação de boletos registrados e gestão de cartões de débito/crédito.',
-      'Sustentação de mais de 20.000 usuários ativos com isolamento multitenant seguro por instituição parceira.',
-      'Pipeline de conciliação assíncrona orientada a eventos utilizando Redis Queues e PostgreSQL.'
+    period: '2019 – 2026',
+    stack: [
+      'PHP / Laravel',
+      'Golang',
+      'AWS ECS & ECR',
+      'AWS SQS',
+      'AWS SES',
+      'AWS SSM (Parameter Store)',
+      'AWS IAM (Least Privilege)',
+      'PostgreSQL (AWS RDS)',
+      'Redis',
+      'Banking APIs',
+      'Inttegra Card Engine',
+      'Inttegra Social Hub',
+      'Docker',
+      'Webhooks'
     ],
-    architectureDetails: 'API Gateway ➔ Auth mTLS / JWT ➔ Go Concurrency Workers ➔ Laravel Core Banking ➔ Redis Event Broker ➔ PostgreSQL Cluster ➔ Gateways BACEN/CIP.'
+    summary: 'Arquitetura e desenvolvimento do ecossistema transacional completo de internet banking, cartões e soluções financeiras integradas para mais de 10 instituições. Abrange o core bancário multitenant e as implementações estratégicas do Inttegra Card (emissão, autorização e ciclo de vida de cartões) e Inttegra Social (ecossistema de pagamentos sociais e distribuição de benefícios), sustentados por uma infraestrutura em nuvem na AWS com alta segurança, mensageria e automação.',
+    clients: ['Inttegra Card', 'Inttegra Social', 'Grupo Itapemirim', 'Aprobank', 'STARTech', 'BANKZZ', 'Belobank', '3NK Financial', 'Jeitto', 'Pomelo', 'SimerBank', 'XBank', 'Zoop'],
+    challenge: 'Construir uma infraestrutura bancária resiliente de alta disponibilidade e estrita conformidade regulatória, integrando serviços essenciais de core banking (PIX, TED, boletos), o pipeline de autorização e emissão de cartões físicos/virtuais do Inttegra Card e a liquidação em massa de benefícios sociais do Inttegra Social com conciliação contínua, governança estrita de segurança e isolamento de dados.',
+    solutionHighlights: [
+      'Implementação do Inttegra Card: módulo completo para emissão, gestão de ciclo de vida e processamento de cartões físicos e virtuais, autorização de transações em tempo real, controle de limites e conciliação financeira automatizada.',
+      'Implementação do Inttegra Social: plataforma bancária focada em pagamentos sociais e distribuição de benefícios governamentais e corporativos, viabilizando inclusão financeira com rastreabilidade total.',
+      'Arquitetura em nuvem na AWS conteinerizada: orquestração de microsserviços via AWS ECS com imagens versionadas no AWS ECR, assegurando auto-scaling e deploys contínuos sem downtime.',
+      'Mensageria e resiliência transacional com AWS SQS: filas assíncronas com políticas de Dead-Letter Queue (DLQ) para absorver picos de webhooks, liquidações e autorizações de cartão.',
+      'Disparo de notificações transacionais e comprovantes bancários em alta escala e homologados via AWS SES.',
+      'Segurança e conformidade bancária: segregação de permissões com AWS IAM (princípio do menor privilégio por container/task) e gerenciamento seguro de credenciais e parâmetros de configuração via AWS SSM (Parameter Store).',
+      'Microsserviços concorrentes em Golang para processamento ultraveloz de webhooks de liquidação PIX, conciliações e autorizações.',
+      'Core bancário robusto em PHP/Laravel estruturado sob Clean Architecture e Domain-Driven Design (DDD).',
+      'Sustentação de mais de 20.000 usuários ativos com isolamento multitenant seguro por instituição parceira e pipelines orientados a eventos com Redis Queues e PostgreSQL.'
+    ],
+    architectureDetails: 'API Gateway ➔ AWS ECS (Containers via ECR com IAM Roles dedicadas) ➔ AWS SQS Event Queues ➔ Go Concurrency Workers & Laravel Core Banking (Inttegra Card & Social) ➔ Redis Broker & PostgreSQL Cluster (RDS) ➔ AWS SES (Alertas e Comprovantes) ➔ AWS SSM (Configurações e Segredos) ➔ BACEN/CIP & Redes de Cartão.'
   },
 
   'monefy': {
